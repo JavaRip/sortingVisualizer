@@ -1,0 +1,19 @@
+{
+  "name": "sortingvisualizer",
+  "version": "1.0.0",
+  "description": "display various sorting and shuffling algorithms",
+  "main": "script.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "sorting"
+  ],
+  "author": "Kane Swartz",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-portsoc": "^0.6.0"
+  }
+}

@@ -1,0 +1,10 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+#sortView {
+  border: 1px solid black;
+  width: 90vw;
+  margin:  auto 1em;
+}
