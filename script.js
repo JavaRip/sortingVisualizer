@@ -124,47 +124,59 @@ async function mergeSort(e, minIndex = 0, maxIndex = ARRAY.length) {
   await mergeSort(null, middle, maxIndex);
 
   await merge(minIndex, middle, maxIndex);
-  displayArray();
+  await displayArray();
 }
 
 async function merge(minIndex, middle, maxIndex) {
-  const sortedItems = [];
   const leftArr = [];
   const rightArr = [];
+  let itemsSorted = 0;
 
   for (let i = minIndex; i < middle; i += 1) leftArr.push(ARRAY[i]);
   for (let i = middle; i < maxIndex; i += 1) rightArr.push(ARRAY[i]);
 
   while (leftArr.length > 0 && rightArr.length > 0) {
     if (leftArr[0] > rightArr[0]) {
-      sortedItems.push(rightArr[0]);
+      ARRAY[minIndex + itemsSorted] = rightArr[0];
+      itemsSorted += 1;
       rightArr.shift();
     } else {
-      sortedItems.push(leftArr[0]);
+      ARRAY[minIndex + itemsSorted] = leftArr[0];
+      itemsSorted += 1;
       leftArr.shift();
     }
+    highlightItem(minIndex, 'blue');
+    highlightItem(middle, 'blue');
+    highlightItem(maxIndex - 1, 'blue');
+    highlightItem(minIndex + itemsSorted, 'red');
+    beep(minIndex + itemsSorted);
+    await displayArray();
   }
 
   while (leftArr.length > 0) {
-    sortedItems.push(leftArr[0]);
+    ARRAY[minIndex + itemsSorted] = leftArr[0];
+    itemsSorted += 1;
+    highlightItem(minIndex, 'blue');
+    highlightItem(middle, 'blue');
+    highlightItem(maxIndex - 1, 'blue');
+    highlightItem(minIndex + itemsSorted, 'red'); // TODO put items to highlight in array
+    // beep(minIndex + itemsSorted); // this breaks the merge sort??
+    await displayArray();
     leftArr.shift();
   }
 
   while (rightArr.length > 0) {
-    sortedItems.push(rightArr[0]);
+    ARRAY[minIndex + itemsSorted] = rightArr[0];
+    itemsSorted += 1;
+    highlightItem(minIndex, 'blue');
+    highlightItem(middle, 'blue');
+    highlightItem(maxIndex - 1, 'blue');
+    highlightItem(minIndex + itemsSorted, 'red');
+    // beep(minIndex + itemsSorted);
+    await displayArray();
     rightArr.shift();
   }
-
-  for (let i = 0; i < sortedItems.length; i += 1) {
-    ARRAY[minIndex + i] = sortedItems[i];
-    beep(minIndex + i);
-
-    await displayArray();
-
-    highlightItem(minIndex + i, 'red');
-    highlightItem(minIndex, 'blue');
-    highlightItem(maxIndex - 1, 'blue');
-  }
+  await displayArray();
 }
 
 function timeoutDelay(ms) {
@@ -180,7 +192,7 @@ function addEventListeners() {
 }
 
 function init() {
-  initArray(100);
+  initArray(50);
   addEventListeners();
 }
 
