@@ -155,24 +155,24 @@ async function merge(minIndex, middle, maxIndex) {
 
   while (leftArr.length > 0) {
     ARRAY[minIndex + itemsSorted] = leftArr[0];
+    beep(minIndex + itemsSorted);
     itemsSorted += 1;
     highlightItem(minIndex, 'blue');
     highlightItem(middle, 'blue');
     highlightItem(maxIndex - 1, 'blue');
     highlightItem(minIndex + itemsSorted, 'red'); // TODO put items to highlight in array
-    // beep(minIndex + itemsSorted); // this breaks the merge sort??
     await displayArray();
     leftArr.shift();
   }
 
   while (rightArr.length > 0) {
     ARRAY[minIndex + itemsSorted] = rightArr[0];
+    beep(minIndex + itemsSorted);
     itemsSorted += 1;
     highlightItem(minIndex, 'blue');
     highlightItem(middle, 'blue');
     highlightItem(maxIndex - 1, 'blue');
     highlightItem(minIndex + itemsSorted, 'red');
-    // beep(minIndex + itemsSorted);
     await displayArray();
     rightArr.shift();
   }
