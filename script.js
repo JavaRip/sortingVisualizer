@@ -69,25 +69,25 @@ async function shuffle() {
 
 async function insertionSort() {
   let sorted;
-  let sortedItems = 0;
   while (!sorted) {
     sorted = true;
-    sortedItems += 1;
 
     for (let i = 0; i < ARRAY.length; i++) {
-      highlightItem(i, 'blue');
       beep(i);
-      let el = ARRAY[i];
+      const el = ARRAY[i];
+
       let j;
-  
       for (j = i - 1; j >= 0 && ARRAY[j] > el; j--) {
-        highlightItem(i + 1, 'red');
         ARRAY[j + 1] = ARRAY[j];
+        highlightItem(i, 'blue');
+        highlightItem(j + 1, 'red');
+        beep(j + 1);
         await displayArray();
       }
       ARRAY[j + 1] = el;
     }
   }
+  await displayArray();
 }
 
 async function bubbleSort() {
