@@ -7,7 +7,7 @@ function beep(index) {
   const u = a.createGain();
   v.connect(u);
   v.frequency.value = ARRAY[index] * 10;
-  v.type = 'squre';
+  v.type = 'square';
   u.connect(a.destination);
   u.gain.value = 1;
   v.start(a.currentTime);
@@ -16,7 +16,7 @@ function beep(index) {
 
 function clearDisplay() {
   const c = SORTVIEW.getContext('2d');
-  c.fillStyle = 'gray';
+  c.fillStyle = 'white';
   c.fillRect(0, 0, SORTVIEW.width, SORTVIEW.height);
 }
 
@@ -35,7 +35,7 @@ async function displayArray() {
 
 function highlightItem(index, color) {
   const c = SORTVIEW.getContext('2d');
-  const itemWidth = SORTVIEW.width / ARRAY.length;
+  const itemWidth = SORTVIEW.width / ARRAY.length; // make global??
   const itemHeight = SORTVIEW.height / ARRAY.length * ARRAY[index];
   const horizontalStartPoint = index * itemWidth;
   c.fillStyle = color;
@@ -63,6 +63,30 @@ async function shuffle() {
     ARRAY[i] = ARRAY[randomIndex];
     ARRAY[randomIndex] = buffer;
     await displayArray();
+  }
+}
+
+
+async function insertionSort() {
+  let sorted;
+  let sortedItems = 0;
+  while (!sorted) {
+    sorted = true;
+    sortedItems += 1;
+
+    for (let i = 0; i < ARRAY.length; i++) {
+      highlightItem(i, 'blue');
+      beep(i);
+      let el = ARRAY[i];
+      let j;
+  
+      for (j = i - 1; j >= 0 && ARRAY[j] > el; j--) {
+        highlightItem(i + 1, 'red');
+        ARRAY[j + 1] = ARRAY[j];
+        await displayArray();
+      }
+      ARRAY[j + 1] = el;
+    }
   }
 }
 
@@ -152,11 +176,11 @@ function addEventListeners() {
   document.querySelector('#shuffle').addEventListener('click', shuffle);
   document.querySelector('#bubble').addEventListener('click', bubbleSort);
   document.querySelector('#merge').addEventListener('click', mergeSort);
+  document.querySelector('#insertion').addEventListener('click', insertionSort);
 }
 
 function init() {
-  displayArray();
-  initArray(50);
+  initArray(100);
   addEventListeners();
 }
 
