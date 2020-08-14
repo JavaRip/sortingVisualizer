@@ -6,5 +6,6 @@
 #sortView {
   border: 1px solid black;
   width: 90vw;
+  max-height: 90vh;
   margin:  auto 1em;
 }
