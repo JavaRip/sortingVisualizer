@@ -7,7 +7,7 @@ function beep(index) {
   const u = a.createGain();
   v.connect(u);
   v.frequency.value = ARRAY[index] * 10;
-  v.type = 'square';
+  v.type = 'squre';
   u.connect(a.destination);
   u.gain.value = 1;
   v.start(a.currentTime);
@@ -16,7 +16,7 @@ function beep(index) {
 
 function clearDisplay() {
   const c = SORTVIEW.getContext('2d');
-  c.fillStyle = 'white';
+  c.fillStyle = 'gray';
   c.fillRect(0, 0, SORTVIEW.width, SORTVIEW.height);
 }
 
@@ -35,7 +35,7 @@ async function displayArray() {
 
 function highlightItem(index, color) {
   const c = SORTVIEW.getContext('2d');
-  const itemWidth = SORTVIEW.width / ARRAY.length; // make global??
+  const itemWidth = SORTVIEW.width / ARRAY.length;
   const itemHeight = SORTVIEW.height / ARRAY.length * ARRAY[index];
   const horizontalStartPoint = index * itemWidth;
   c.fillStyle = color;
@@ -155,7 +155,8 @@ function addEventListeners() {
 }
 
 function init() {
-  initArray(100);
+  displayArray();
+  initArray(50);
   addEventListeners();
 }
 
