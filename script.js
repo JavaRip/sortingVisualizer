@@ -1,7 +1,9 @@
 const ARRAY = [];
 const SORTVIEW = document.querySelector('#sortView');
 
-function beep(index) {
+function beepFallback() {}
+
+function audioContextBeep(index) {
   const a = new AudioContext();
   const v = a.createOscillator();
   const u = a.createGain();
@@ -9,10 +11,12 @@ function beep(index) {
   v.frequency.value = ARRAY[index] * 10;
   v.type = 'square';
   u.connect(a.destination);
-  u.gain.value = 1;
+  u.gain.value = 0;
   v.start(a.currentTime);
   v.stop(a.currentTime + 0.01);
 }
+
+const beep = (AudioContext) ? audioContextBeep : beepFallback;
 
 function clearDisplay() {
   const c = SORTVIEW.getContext('2d');
@@ -128,7 +132,7 @@ async function mergeSort(e, minIndex = 0, maxIndex = ARRAY.length) {
 }
 
 async function merge(minIndex, middle, maxIndex) {
-  const leftArr = [];
+  const leftArr = []; // instead of using arrays just swap if minIndex + i > middle + i :o
   const rightArr = [];
   let itemsSorted = 0;
 
@@ -183,16 +187,25 @@ function timeoutDelay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function showController() {
+  document.querySelector('#controller').style.display = '';
+}
+
+function hideController() {
+  document.querySelector('#controller').style.display = 'none';
+}
 
 function addEventListeners() {
-  document.querySelector('#shuffle').addEventListener('click', shuffle);
-  document.querySelector('#bubble').addEventListener('click', bubbleSort);
-  document.querySelector('#merge').addEventListener('click', mergeSort);
-  document.querySelector('#insertion').addEventListener('click', insertionSort);
+  document.querySelector('#shuffle').addEventListener('mouseup', shuffle);
+  document.querySelector('#bubble').addEventListener('mouseup', bubbleSort);
+  document.querySelector('#merge').addEventListener('mouseup', mergeSort);
+  document.querySelector('#insertion').addEventListener('mouseup', insertionSort);
+  document.querySelector('body').addEventListener('mousedown', showController);
+  document.querySelector('body').addEventListener('mouseup', hideController);
 }
 
 function init() {
-  initArray(50);
+  initArray(75);
   addEventListeners();
 }
 
