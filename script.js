@@ -4,6 +4,7 @@ const SORTVIEW = document.querySelector('#sortView');
 function beepFallback() {}
 
 function audioContextBeep(index) {
+  if (document.querySelector('#disableSound').style.display === 'none') return;
   const a = new AudioContext();
   const v = a.createOscillator();
   const u = a.createGain();
@@ -11,7 +12,7 @@ function audioContextBeep(index) {
   v.frequency.value = ARRAY[index] * 10;
   v.type = 'square';
   u.connect(a.destination);
-  u.gain.value = 0;
+  u.gain.value = 1;
   v.start(a.currentTime);
   v.stop(a.currentTime + 0.01);
 }
@@ -47,6 +48,9 @@ function highlightItem(index, color) {
 }
 
 async function initArray(length) {
+  while (ARRAY.length > 0) {
+    ARRAY.shift();
+  }
   for (let i = 0; i < length; i += 1) {
     ARRAY.push(i);
     await timeoutDelay(3000 / length);
@@ -187,25 +191,38 @@ function timeoutDelay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function showController() {
-  document.querySelector('#controller').style.display = '';
-}
-
-function hideController() {
-  document.querySelector('#controller').style.display = 'none';
-}
-
 function addEventListeners() {
-  document.querySelector('#shuffle').addEventListener('mouseup', shuffle);
-  document.querySelector('#bubble').addEventListener('mouseup', bubbleSort);
-  document.querySelector('#merge').addEventListener('mouseup', mergeSort);
-  document.querySelector('#insertion').addEventListener('mouseup', insertionSort);
-  document.querySelector('body').addEventListener('mousedown', showController);
-  document.querySelector('body').addEventListener('mouseup', hideController);
+  const controller = document.querySelector('#controller');
+  const shuffleBtn = document.querySelector('#shuffle');
+  const bubbleBtn = document.querySelector('#bubble');
+  const mergeBtn = document.querySelector('#merge');
+  const insertionBtn = document.querySelector('#insertion');
+  const enableSoundBtn = document.querySelector('#enableSound');
+  const disableSoundBtn = document.querySelector('#disableSound');
+  const initBtn = document.querySelector('#init');
+  const body = document.querySelector('body');
+
+  shuffleBtn.addEventListener('mouseup', shuffle);
+  bubbleBtn.addEventListener('mouseup', bubbleSort);
+  mergeBtn.addEventListener('mouseup', mergeSort);
+  insertionBtn.addEventListener('mouseup', insertionSort);
+
+  enableSoundBtn.addEventListener('mouseup', () => {
+    enableSoundBtn.style.display = 'none';
+    disableSoundBtn.style.display = '';
+  });
+
+  disableSoundBtn.addEventListener('mouseup', () => {
+    enableSoundBtn.style.display = '';
+    disableSoundBtn.style.display = 'none';
+  });
+
+  initBtn.addEventListener('mouseup', () => initArray(50));
+  body.addEventListener('mousedown', () => { controller.style.display = ''; });
+  body.addEventListener('mouseup', () => { controller.style.display = 'none'; });
 }
 
 function init() {
-  initArray(75);
   addEventListeners();
 }
 

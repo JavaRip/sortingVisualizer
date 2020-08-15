@@ -20,13 +20,16 @@ button {
   width: 100vw;
   display: grid;
   grid-template-columns: auto auto;
-}
-
-#controller > button {
-  border: 0.1em solid gray;
+  grid-column-gap: 0.2em;
+  grid-row-gap: 0.2em;
   background-color: rgb(105,105,105, 0.8);
 }
 
+#controller > button {
+  background-color: rgb(130,130,130, 0.9);
+  border: none;
+}
+
 #controller > button:hover {
-  background-color: rgb(105,105,105, 0.9);
+  background-color: rgb(105,105,105,0.9);
 }
