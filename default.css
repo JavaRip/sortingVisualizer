@@ -7,6 +7,10 @@ button {
   cursor: pointer;
 }
 
+#instructions {
+  font-size: 3em;
+}
+
 #sortView {
   width: 100vw;
   height: 100vh;
@@ -27,6 +31,7 @@ button {
 
 #controller > button {
   background-color: rgb(130,130,130, 0.9);
+  font-size: 3em;
   border: none;
 }
 

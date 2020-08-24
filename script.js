@@ -192,6 +192,8 @@ function timeoutDelay(ms) {
 }
 
 function addEventListeners() {
+  const clickEvents = ['click', 'start'];
+
   const controller = document.querySelector('#controller');
   const shuffleBtn = document.querySelector('#shuffle');
   const bubbleBtn = document.querySelector('#bubble');
@@ -201,29 +203,38 @@ function addEventListeners() {
   const disableSoundBtn = document.querySelector('#disableSound');
   const initBtn = document.querySelector('#init');
   const body = document.querySelector('body');
+  for (const e of clickEvents) {
+    shuffleBtn.addEventListener(e, shuffle);
+    bubbleBtn.addEventListener(e, bubbleSort);
+    mergeBtn.addEventListener(e, mergeSort);
+    insertionBtn.addEventListener(e, insertionSort);
 
-  shuffleBtn.addEventListener('mouseup', shuffle);
-  bubbleBtn.addEventListener('mouseup', bubbleSort);
-  mergeBtn.addEventListener('mouseup', mergeSort);
-  insertionBtn.addEventListener('mouseup', insertionSort);
+    enableSoundBtn.addEventListener(e, () => {
+      enableSoundBtn.style.display = 'none';
+      disableSoundBtn.style.display = '';
+    });
 
-  enableSoundBtn.addEventListener('mouseup', () => {
-    enableSoundBtn.style.display = 'none';
-    disableSoundBtn.style.display = '';
-  });
+    disableSoundBtn.addEventListener(e, () => {
+      enableSoundBtn.style.display = '';
+      disableSoundBtn.style.display = 'none';
+    });
 
-  disableSoundBtn.addEventListener('mouseup', () => {
-    enableSoundBtn.style.display = '';
-    disableSoundBtn.style.display = 'none';
-  });
 
-  initBtn.addEventListener('mouseup', () => initArray(50));
-  body.addEventListener('mousedown', () => { controller.style.display = ''; });
-  body.addEventListener('mouseup', () => { controller.style.display = 'none'; });
+    initBtn.addEventListener(e, () => initArray(50));
+    body.addEventListener(e, () => {
+      if (controller.style.display === '') {
+        controller.style.display = 'none';
+      } else if (controller.style.display === 'none') {
+        controller.style.display = '';
+      }
+    });
+  }
 }
 
-function init() {
+async function init() {
   addEventListeners();
+  await timeoutDelay(5000);
+  document.querySelector('#instructions').style.display = 'none';
 }
 
 window.addEventListener('load', init);
