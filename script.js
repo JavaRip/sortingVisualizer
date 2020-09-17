@@ -1,7 +1,8 @@
+const AudioContext = window.AudioContext || window.webkitAudioContext
 const ARRAY = [];
 const SORTVIEW = document.querySelector('#sortView');
 
-function beepFallback() {}
+function beepFallback() { }
 
 function audioContextBeep(index) {
   if (document.querySelector('#disableSound').style.display === 'none') return;
@@ -17,7 +18,7 @@ function audioContextBeep(index) {
   v.stop(a.currentTime + 0.01);
 }
 
-const beep = (AudioContext) ? audioContextBeep : beepFallback;
+const beep = AudioContext ? audioContextBeep : beepFallback;
 
 function clearDisplay() {
   const c = SORTVIEW.getContext('2d');
