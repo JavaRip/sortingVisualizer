@@ -18,7 +18,7 @@ function audioContextBeep(index) {
   v.stop(a.currentTime + 0.01);
 }
 
-const beep = (AudioContext) ? audioContextBeep : beepFallback;
+const beep = AudioContext ? audioContextBeep : beepFallback;
 
 function clearDisplay() {
   const c = SORTVIEW.getContext('2d');
