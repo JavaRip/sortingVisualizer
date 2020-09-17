@@ -192,7 +192,7 @@ function timeoutDelay(ms) {
 }
 
 function addEventListeners() {
-  const clickEvents = ['click', 'start'];
+  const clickEvents = ['click', 'touch'];
 
   const controller = document.querySelector('#controller');
   const shuffleBtn = document.querySelector('#shuffle');
@@ -231,10 +231,8 @@ function addEventListeners() {
   }
 }
 
-async function init() {
+function init() {
   addEventListeners();
-  await timeoutDelay(5000);
-  document.querySelector('#instructions').style.display = 'none';
 }
 
 window.addEventListener('load', init);
