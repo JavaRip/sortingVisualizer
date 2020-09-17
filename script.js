@@ -1,7 +1,8 @@
+const AudioContext = window.AudioContext || window.webkitAudioContext
 const ARRAY = [];
 const SORTVIEW = document.querySelector('#sortView');
 
-function beepFallback() {}
+function beepFallback() { }
 
 function audioContextBeep(index) {
   if (document.querySelector('#disableSound').style.display === 'none') return;
